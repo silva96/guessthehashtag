@@ -5,3 +5,23 @@
 .DS_Store
 /build
 /captures
+# Built application files
+*.apk
+*.ap_
+
+*.dex
+
+*.class
+
+bin/
+gen/
+
+.gradle/
+build/
+/*/build/
+
+local.properties
+
+proguard/
+
+*.log
