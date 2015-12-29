@@ -1,0 +1,181 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:id="@+id/profile_content_wrapper"
+        android:visibility="visible">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:id="@+id/person_wrapper">
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16sp"
+                    android:id="@+id/profile_pic"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/profile_pic"
+                    android:layout_marginBottom="8dp"
+                    android:id="@+id/full_name"
+                    android:text="Benjamín Silva"
+                    android:textSize="22sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/full_name"
+                    android:id="@+id/username"
+                    android:layout_marginBottom="16dp"
+                    android:text="benjasilvah"
+                    android:textSize="16sp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/person_wrapper"
+                android:background="@color/colorPrimary"
+                android:elevation="7dp"
+                android:layout_marginBottom="8dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/row_one"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:id="@+id/score"
+                        android:text="--"
+                        android:textSize="40sp"
+                        android:layout_marginRight="24dp"
+                        android:textColor="@color/white" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/score"
+                        android:id="@+id/score_label"
+                        android:text="SCORE"
+                        android:layout_marginBottom="8dp"
+                        android:textSize="12sp"
+                        android:textColor="@color/colorAccent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/score"
+                        android:id="@+id/week_score"
+                        android:text="--"
+                        android:textSize="40sp"
+                        android:layout_alignTop="@+id/score"
+                        android:layout_marginLeft="24dp"
+                        android:textColor="@color/white" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/week_score"
+                        android:id="@+id/week_score_label"
+                        android:layout_marginBottom="8dp"
+                        android:text="WEEK SCORE"
+                        android:textSize="12sp"
+                        android:layout_alignLeft="@+id/week_score"
+                        android:textColor="@color/colorAccent" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_below="@id/row_one">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rank"
+                        android:text="--"
+                        android:textSize="40sp"
+                        android:textColor="@color/white"
+                        android:layout_marginRight="24dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rank"
+                        android:id="@+id/rank_label"
+                        android:layout_marginBottom="16dp"
+                        android:text="RANK"
+                        android:textSize="12sp"
+                        android:layout_alignLeft="@+id/rank"
+                        android:textColor="@color/colorAccent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/max_streak"
+                        android:text="--"
+                        android:textSize="40sp"
+                        android:textColor="@color/white"
+                        android:layout_toRightOf="@+id/rank"
+                        android:layout_marginLeft="24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/max_streak"
+                        android:id="@+id/max_streak_label"
+                        android:text="MAX STREAK"
+                        android:textSize="12sp"
+                        android:layout_alignLeft="@+id/max_streak"
+                        android:textColor="@color/colorAccent" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/profile_loading_wrapper"
+        android:visibility="gone">
+        <ProgressBar
+            style="?android:attr/progressBarStyleInverse"
+            android:id="@+id/progress_bar_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loading_text_profile"
+            android:layout_marginTop="8dp"
+            android:text="@string/loading_profile"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorPrimary"
+            android:layout_below="@id/progress_bar_profile"/>
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

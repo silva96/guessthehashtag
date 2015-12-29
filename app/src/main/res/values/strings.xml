@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Guess The Hashtag</string>
+    <string name="action_settings">Settings</string>
+    <string name="login_text">We need you to authenticate with instagram so we can retrieve some pictures for you.</string>
+    <string name="loading_ig_auth">Loading Instagram authentication system</string>
+    <string name="loading_image">Loading next image</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="score">Score</string>
+    <string name="close_alert_title">Information</string>
+    <string name="title_activity_results">ResultsActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="loading_profile">Loading profile</string>
+    <string name="logout">Logout</string>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/profile_pic"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="64dp"
+        android:id="@+id/text_wrapper"
+        android:layout_toRightOf="@id/profile_pic"
+        android:paddingLeft="8dp"
+        android:paddingTop="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/username"
+            android:textSize="24sp"
+            android:text="benjasilvah"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/score"
+            android:layout_below="@id/username"
+            android:textSize="18sp"
+            android:text="500 points"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentRight="true"
+        android:background="@color/colorPrimary"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
+            android:id="@+id/ranking"
+            android:text="100"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+</RelativeLayout>
