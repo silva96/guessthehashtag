@@ -70,9 +70,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         User u = mDataset.get(position);
         holder.mUsername.setText(u.getUsername());
         if(mType.equals("WEEKLY"))
-            holder.mScore.setText(""+u.getWeek_score() + " points");
+            holder.mScore.setText(""+u.getWeek_score() + " " +mContext.getString(R.string.points));
         else
-            holder.mScore.setText(""+u.getScore() + " points");
+            holder.mScore.setText(""+u.getScore() + " " + mContext.getString(R.string.points));
         holder.mRanking.setText(""+(position+1));
         Picasso.with(mContext).load(u.getProfile_picture()).into(holder.mProfilePic);
     }

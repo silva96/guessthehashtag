@@ -4,11 +4,18 @@
     <string name="login_text">We need you to authenticate with instagram so we can retrieve some pictures for you.</string>
     <string name="loading_ig_auth">Loading Instagram authentication system</string>
     <string name="loading_image">Loading next image</string>
-    <string name="title_activity_main2" translatable="false">Main2Activity</string>
     <string name="score">Score</string>
     <string name="close_alert_title">Information</string>
-    <string name="title_activity_results" translatable="false">ResultsActivity</string>
-    <string name="section_format" translatable="false">Hello World from section: %1$d</string>
+    <string name="title_activity_results">@string/ranking</string>
     <string name="loading_profile">Loading profile</string>
     <string name="logout">Logout</string>
+    <string name="ranking">Ranking</string>
+    <string name="oh_no_an_error_occurred">Oh no! an error occurred</string>
+    <string name="week_score">week score</string>
+    <string name="rank">rank</string>
+    <string name="max_streak">max streak</string>
+    <string name="points">points</string>
+    <string name="profile">profile</string>
+    <string name="weekly">weekly</string>
+    <string name="overall">overall</string>
 </resources>

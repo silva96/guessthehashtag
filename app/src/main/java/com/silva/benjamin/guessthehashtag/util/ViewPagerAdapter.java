@@ -1,5 +1,6 @@
 package com.silva.benjamin.guessthehashtag.util;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -14,9 +15,10 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     private  List<Fragment> mFragmentList = new ArrayList<>();
 
 
-
-    public ViewPagerAdapter(FragmentManager fm) {
+    private Context mContext;
+    public ViewPagerAdapter(FragmentManager fm, Context mContext) {
         super(fm);
+        this.mContext = mContext;
     }
 
 
@@ -36,6 +38,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return ((PagerFragment)mFragmentList.get(position)).getmTabName();
+        int tab_name = ((PagerFragment)mFragmentList.get(position)).getmTabName();
+        return mContext.getString(tab_name);
     }
 }

@@ -45,9 +45,9 @@ public class ResultsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Ranking");
+        getSupportActionBar().setTitle(R.string.ranking);
         mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
         mViewPagerAdapter.addFragment(new ProfileFragment());
         mViewPagerAdapter.addFragment(new WeeklyFragment());
         mViewPagerAdapter.addFragment(new OverallFragment());

@@ -8,5 +8,14 @@
     <string name="login_text">Necesitamos que inicies sesión en Instagram para cargar imágenes para ti.</string>
     <string name="logout">Cerrar sesión</string>
     <string name="score">Puntuación</string>
-    <string name="title_activity_main2"></string>
+    <string name="max_streak">mejor racha</string>
+    <string name="oh_no_an_error_occurred">Oh no! ha ocurrido un error</string>
+    <string name="points">puntos</string>
+    <string name="rank">Posición</string>
+    <string name="ranking">Posiciones</string>
+    <string name="week_score">Puntuación semanal</string>
+    <string name="title_activity_results">@string/ranking</string>
+    <string name="overall">histórico</string>
+    <string name="profile">perfil</string>
+    <string name="weekly">semanal</string>
 </resources>

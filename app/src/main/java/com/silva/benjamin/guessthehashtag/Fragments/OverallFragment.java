@@ -2,6 +2,7 @@ package com.silva.benjamin.guessthehashtag.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.test.ServiceTestCase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,8 @@ public class OverallFragment extends WeeklyFragment {
 
     public OverallFragment() {
         // Required empty public constructor
-        setmTabName("OVERALL");
+        setmTabName(R.string.overall);
+        setmTabType("OVERALL");
         setOrderBy("score");
     }
 }

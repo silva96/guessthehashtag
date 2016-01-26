@@ -1,5 +1,6 @@
 package com.silva.benjamin.guessthehashtag.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -48,7 +49,8 @@ public class ProfileFragment extends PagerFragment {
     private Firebase mRootRef;
 
     public ProfileFragment() {
-        setmTabName("PROFILE");
+        setmTabName(R.string.profile);
+        setmTabType("PROFILE");
     }
 
     @Override
@@ -81,7 +83,7 @@ public class ProfileFragment extends PagerFragment {
 
             @Override
             public void onError() {
-                ((ResultsActivity) getActivity()).showAToast("Oh no! an error occurred", Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 30);
+                ((ResultsActivity) getActivity()).showAToast(getString(R.string.oh_no_an_error_occurred), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 30);
                 mProfileLoadingWrapper.setVisibility(View.GONE);
             }
         });

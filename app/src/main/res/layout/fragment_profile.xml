@@ -78,8 +78,10 @@
                         android:layout_alignParentLeft="true"
                         android:layout_below="@id/score"
                         android:id="@+id/score_label"
-                        android:text="SCORE"
+                        android:text="@string/score"
+                        android:textAllCaps="true"
                         android:layout_marginBottom="8dp"
+
                         android:textSize="12sp"
                         android:textColor="@color/colorAccent" />
 
@@ -99,8 +101,9 @@
                         android:layout_below="@id/week_score"
                         android:id="@+id/week_score_label"
                         android:layout_marginBottom="8dp"
-                        android:text="WEEK SCORE"
+                        android:text="@string/week_score"
                         android:textSize="12sp"
+                        android:textAllCaps="true"
                         android:layout_alignLeft="@+id/week_score"
                         android:textColor="@color/colorAccent" />
                 </RelativeLayout>
@@ -124,7 +127,8 @@
                         android:layout_below="@id/rank"
                         android:id="@+id/rank_label"
                         android:layout_marginBottom="16dp"
-                        android:text="RANK"
+                        android:text="@string/rank"
+                        android:textAllCaps="true"
                         android:textSize="12sp"
                         android:layout_alignLeft="@+id/rank"
                         android:textColor="@color/colorAccent" />
@@ -144,7 +148,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/max_streak"
                         android:id="@+id/max_streak_label"
-                        android:text="MAX STREAK"
+                        android:text="@string/max_streak"
+                        android:textAllCaps="true"
                         android:textSize="12sp"
                         android:layout_alignLeft="@+id/max_streak"
                         android:textColor="@color/colorAccent" />

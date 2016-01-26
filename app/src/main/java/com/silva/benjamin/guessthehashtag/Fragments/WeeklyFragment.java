@@ -46,7 +46,8 @@ public class WeeklyFragment extends PagerFragment {
     private Tracker mTracker;
 
     public WeeklyFragment() {
-        setmTabName("WEEKLY");
+        setmTabName(R.string.weekly);
+        setmTabType("WEEKLY");
         setOrderBy("week_score");
     }
 
@@ -92,7 +93,7 @@ public class WeeklyFragment extends PagerFragment {
                     mUsersDataset.add(userSnapshot.getValue(User.class));
                 }
                 Collections.reverse(mUsersDataset);
-                mAdapter = new UserListAdapter(mUsersDataset, getActivity(), getmTabName());
+                mAdapter = new UserListAdapter(mUsersDataset, getActivity(), getmTabType());
                 mRecyclerView.setAdapter(mAdapter);
                 mLoadingWrapper.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
