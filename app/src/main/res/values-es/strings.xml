@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Ajustes</string>
+    <string name="close_alert_title">Información</string>
+    <string name="loading_ig_auth">Cargando inicio de sesión de Instagram</string>
+    <string name="loading_image">Cargando siguiente imagen</string>
+    <string name="loading_profile">Cargando perfil</string>
+    <string name="login_text">Necesitamos que inicies sesión en Instagram para cargar imágenes para ti.</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="score">Puntuación</string>
+    <string name="title_activity_main2"></string>
+</resources>
