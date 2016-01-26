@@ -44,6 +44,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         Firebase.setAndroidContext(getApplicationContext());
-        mRootRef =  new Firebase("https://guessthehashtag.firebaseio.com/data");
+        mRootRef = new Firebase("https://guessthehashtag.firebaseio.com/data");
         mRootRef.authWithCustomToken("91cvapZgSdVcjyvrepGKS2nSgDDFAiiDBLDl97Rx", new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
@@ -116,14 +117,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    private void goToResults(){
+
+    private void goToResults() {
         Intent intent = new Intent(MainActivity.this, ResultsActivity.class);
         startActivity(intent);
         finish();
     }
-    public void play(){
+
+    public void play() {
         final String hashtag = Helper.getRandomHashTag();
-        Log.d("HASHTAG",hashtag);
+        Log.d("HASHTAG", hashtag);
         Call<SearchData> call = Helper.service().listImagesUsingTag(hashtag, "20", Helper.getToken(this));
         call.enqueue(new Callback<SearchData>() {
 
@@ -162,8 +165,9 @@ public class MainActivity extends AppCompatActivity {
                                                         }
                                                     } else {
                                                         ((Button) v).setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.red_incorrect));
-                                                        for(Button b: buttons){
-                                                            if(b.getText().equals("#"+hashtag)) b.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.green_correct));
+                                                        for (Button b : buttons) {
+                                                            if (b.getText().equals("#" + hashtag))
+                                                                b.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.green_correct));
                                                         }
                                                         if (Helper.mCurrentStreak > 0 && doesntHaveStreakYet)
                                                             doesntHaveStreakYet = false; //if fails but had a streak for first time
@@ -239,21 +243,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void showAToast (String message, int gravity, int xoffset, int yoffset){
+
+    public void showAToast(String message, int gravity, int xoffset, int yoffset) {
         if (mToast != null) {
             mToast.cancel();
         }
         mToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         int x_offset = Math.round(xoffset * getResources().getDisplayMetrics().density);
         int y_offset = Math.round(yoffset * getResources().getDisplayMetrics().density);
-        mToast.setGravity(gravity,x_offset,y_offset);
+        mToast.setGravity(gravity, x_offset, y_offset);
         mToast.show();
     }
-    private void displayAlert(String title, String message, Runnable positiveFunction, Runnable negativeFunction){
+
+    private void displayAlert(String title, String message, Runnable positiveFunction, Runnable negativeFunction) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setMessage(message)
                 .setTitle(title);
-        if(positiveFunction!=null){
+        if (positiveFunction != null) {
             final Runnable positive = positiveFunction;
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
@@ -262,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        if(negativeFunction!=null){
+        if (negativeFunction != null) {
             final Runnable negative = negativeFunction;
             builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                 @Override
@@ -303,9 +309,9 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void getUser(){
-        if(isOnline()) {
-            if(!Helper.hasUsername(MainActivity.this)){
+    public void getUser() {
+        if (isOnline()) {
+            if (!Helper.hasUsername(MainActivity.this)) {
                 Call<UserData> call = Helper.service().getCurrentUser(Helper.getToken(this));
                 call.enqueue(new Callback<UserData>() {
                     @Override
@@ -323,8 +329,7 @@ public class MainActivity extends AppCompatActivity {
                         getUser();
                     }
                 });
-            }
-            else{
+            } else {
                 User aux = new User();
                 String username = Helper.getCurrentUserName(MainActivity.this);
                 aux.setUsername(username);
@@ -333,8 +338,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-        }
-        else{
+        } else {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -345,7 +349,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getFirebaseUser(final User current_user){
+    private void getFirebaseUser(final User current_user) {
         mCurrentUserRef = mRootRef.child("users").child(current_user.getUsername());
         mGetUserListener = new ValueEventListener() {
             @Override
@@ -378,16 +382,17 @@ public class MainActivity extends AppCompatActivity {
         };
         mCurrentUserRef.addValueEventListener(mGetUserListener);
     }
-    private void checkThings(){
+
+    private void checkThings() {
         Calendar cal = Calendar.getInstance();
         boolean monday = cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY;
         mWeekResetRef = mRootRef.child("settings").child("week_reset");
-        if(monday){
+        if (monday) {
             mWeekResetRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     boolean is_reseted = snapshot.getValue(boolean.class);
-                    if(!is_reseted){
+                    if (!is_reseted) {
                         updateAllWeekScores();
                     }
                 }
@@ -397,17 +402,17 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-        }
-        else{
+        } else {
             mWeekResetRef.setValue(false);
         }
     }
-    private void updateAllWeekScores(){
+
+    private void updateAllWeekScores() {
         mRootRef.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 Map<String, Object> week_scores = new HashMap<String, Object>();
-                for (DataSnapshot userSnapshot : snapshot.getChildren()){
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                     week_scores.put(userSnapshot.child("username").getValue() + "/week_score", 0);
                 }
                 mRootRef.child("users").updateChildren(week_scores);

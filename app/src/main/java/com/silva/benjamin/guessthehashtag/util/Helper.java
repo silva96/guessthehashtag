@@ -29,28 +29,31 @@ public class Helper {
     public static int mCurrentStreak = 0;
     public static User currentUser;
 
-    public static void saveToken(String token, Context context){
+    public static void saveToken(String token, Context context) {
         SharedPreferences settings = context.getSharedPreferences(Helper.SETTINGS_NAME, context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(Helper.TOKEN_PREFERENCE, token);
         editor.commit();
     }
-    public static void removeToken(Context context){
+
+    public static void removeToken(Context context) {
         SharedPreferences settings = context.getSharedPreferences(Helper.SETTINGS_NAME, context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(Helper.TOKEN_PREFERENCE, "has-no-token");
         editor.commit();
     }
-    public static boolean hasToken(Context context){
+
+    public static boolean hasToken(Context context) {
         return !getToken(context).equals("has-no-token");
     }
-    public static String getToken(Context context){
+
+    public static String getToken(Context context) {
         SharedPreferences settings = context.getSharedPreferences(Helper.SETTINGS_NAME, context.MODE_PRIVATE);
         String token = settings.getString(Helper.TOKEN_PREFERENCE, "has-no-token");
         return token;
     }
 
-    public static InstagramService service(){
+    public static InstagramService service() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.instagram.com")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -60,14 +63,15 @@ public class Helper {
     }
 
 
-    public static ArrayList<String> getAllHashtags(){
+    public static ArrayList<String> getAllHashtags() {
         return StaticData.allHashtags;
     }
-    public static ArrayList<String> getRandomHashtagOptions(String used,ArrayList<String> banned){
+
+    public static ArrayList<String> getRandomHashtagOptions(String used, ArrayList<String> banned) {
         ArrayList<String> total = new ArrayList<>(getAllHashtags());
         total.removeAll(banned);
         Collections.shuffle(total);
-        total.subList(2, total.size()-1).clear();
+        total.subList(2, total.size() - 1).clear();
         total.add(used);
         Collections.shuffle(total);
         return total;
@@ -80,6 +84,7 @@ public class Helper {
         editor.commit();
 
     }
+
     public static String getCurrentUserName(Context context) {
         SharedPreferences settings = context.getSharedPreferences(Helper.SETTINGS_NAME, context.MODE_PRIVATE);
         String username = settings.getString(Helper.USERNAME_PREFERENCE, "##no-username##");
@@ -87,7 +92,7 @@ public class Helper {
 
     }
 
-    public static boolean hasUsername(Context context){
+    public static boolean hasUsername(Context context) {
         return !getCurrentUserName(context).equals("##no-username##");
     }
 

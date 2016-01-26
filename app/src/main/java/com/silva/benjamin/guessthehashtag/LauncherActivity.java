@@ -30,9 +30,9 @@ public class LauncherActivity extends AppCompatActivity {
                 ProgressBar spinner = (ProgressBar) findViewById(R.id.progress_bar);
                 spinner.setVisibility(View.GONE);
 
-                if(Helper.hasToken(LauncherActivity.this)){
+                if (Helper.hasToken(LauncherActivity.this)) {
                     goToApp();
-                }else {
+                } else {
                     goToAuth();
                 }
             }
@@ -40,12 +40,14 @@ public class LauncherActivity extends AppCompatActivity {
 
 
     }
-    private void goToApp(){
+
+    private void goToApp() {
         Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
-    private void goToAuth(){
+
+    private void goToAuth() {
         Intent intent = new Intent(LauncherActivity.this, AuthActivity.class);
         startActivity(intent);
         finish();

@@ -1,12 +1,5 @@
 package com.silva.benjamin.guessthehashtag.Fragments;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.test.ServiceTestCase;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.silva.benjamin.guessthehashtag.R;
 
 /**

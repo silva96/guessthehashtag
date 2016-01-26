@@ -43,7 +43,7 @@ public class AuthActivity extends AppCompatActivity {
     private WebView mWebView;
     private ProgressBar mProgressBarAuth;
     private TextView mLoadingtextAuth;
-    private boolean comesFromLogout=false;
+    private boolean comesFromLogout = false;
     private Tracker mTracker;
 
     @Override
@@ -54,24 +54,23 @@ public class AuthActivity extends AppCompatActivity {
         mTracker = application.getDefaultTracker();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_auth);
-        if(Helper.hasToken(AuthActivity.this)){
+        if (Helper.hasToken(AuthActivity.this)) {
             goToApp();
-        }
-        else{
+        } else {
             mProgressBarAuth = (ProgressBar) findViewById(R.id.progress_bar_auth);
             mLoadingtextAuth = (TextView) findViewById(R.id.loading_text_auth);
             mWebView = (WebView) findViewById(R.id.login_web_view);
             CookieManager cookieManager = CookieManager.getInstance();
 
             int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-            if (currentapiVersion >= android.os.Build.VERSION_CODES.LOLLIPOP){
+            if (currentapiVersion >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
                     @Override
                     public void onReceiveValue(Boolean value) {
                         //do nothing
                     }
                 });
-            } else{
+            } else {
                 cookieManager.removeAllCookie();
             }
 
@@ -120,10 +119,9 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private void loadIg() {
-        if(isOnline()) {
+        if (isOnline()) {
             mWebView.loadUrl("https://instagram.com/oauth/authorize/?client_id=" + Helper.CLIENT_ID + "&redirect_uri=" + Helper.CALLBACK_URL + "&response_type=token");
-        }
-        else{
+        } else {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -134,7 +132,7 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
-    private void goToApp(){
+    private void goToApp() {
         Intent intent = new Intent(AuthActivity.this, MainActivity.class);
         startActivity(intent);
         finish();

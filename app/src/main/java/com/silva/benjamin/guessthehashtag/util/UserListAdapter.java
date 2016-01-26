@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.silva.benjamin.guessthehashtag.R;
@@ -14,12 +13,11 @@ import com.silva.benjamin.guessthehashtag.models.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by benjamin on 12/10/15.
  */
-public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder>{
+public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
     private ArrayList<User> mDataset;
     private Context mContext;
@@ -34,7 +32,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         protected TextView mScore;
         protected TextView mRanking;
         protected ImageView mProfilePic;
-
 
 
         public ViewHolder(View v) {
@@ -52,10 +49,11 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         this.mContext = mContext;
         this.mType = mType;
     }
+
     // Create new views (invoked by the layout manager)
     @Override
     public UserListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                           int viewType) {
+                                                         int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.user_list_item, parent, false);
@@ -69,20 +67,21 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         User u = mDataset.get(position);
         holder.mUsername.setText(u.getUsername());
-        if(mType.equals("WEEKLY"))
-            holder.mScore.setText(""+u.getWeek_score() + " " +mContext.getString(R.string.points));
+        if (mType.equals("WEEKLY"))
+            holder.mScore.setText("" + u.getWeek_score() + " " + mContext.getString(R.string.points));
         else
-            holder.mScore.setText(""+u.getScore() + " " + mContext.getString(R.string.points));
-        holder.mRanking.setText(""+(position+1));
+            holder.mScore.setText("" + u.getScore() + " " + mContext.getString(R.string.points));
+        holder.mRanking.setText("" + (position + 1));
         Picasso.with(mContext).load(u.getProfile_picture()).into(holder.mProfilePic);
     }
+
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return mDataset.size();
     }
 
-    public User getItemAt(int position){
+    public User getItemAt(int position) {
         return mDataset.get(position);
     }
 

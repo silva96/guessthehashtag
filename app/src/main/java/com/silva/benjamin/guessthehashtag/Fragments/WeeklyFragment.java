@@ -1,13 +1,11 @@
 package com.silva.benjamin.guessthehashtag.Fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 
@@ -27,8 +25,6 @@ import com.silva.benjamin.guessthehashtag.util.UserListAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -58,7 +54,7 @@ public class WeeklyFragment extends PagerFragment {
         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
         mTracker = application.getDefaultTracker();
         Firebase.setAndroidContext(getActivity());
-        mRootRef =  new Firebase("https://guessthehashtag.firebaseio.com/data");
+        mRootRef = new Firebase("https://guessthehashtag.firebaseio.com/data");
         mRootRef.authWithCustomToken("91cvapZgSdVcjyvrepGKS2nSgDDFAiiDBLDl97Rx", new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
@@ -70,7 +66,7 @@ public class WeeklyFragment extends PagerFragment {
 
             }
         });
-        mUsersDataset  = new ArrayList<>();
+        mUsersDataset = new ArrayList<>();
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.week_recycler_view);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -83,7 +79,7 @@ public class WeeklyFragment extends PagerFragment {
         return rootView;
     }
 
-    private void renderData(){
+    private void renderData() {
         Query queryRef = mRootRef.child("users").orderByChild(getOrderBy()).limitToLast(100);//we need to iterate them backwards
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -123,7 +119,7 @@ public class WeeklyFragment extends PagerFragment {
 
     @Override
     public void onResume() {
-        mTracker.setScreenName(getmTabName()+"Fragment");
+        mTracker.setScreenName(getmTabType() + "Fragment");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         super.onResume();
     }

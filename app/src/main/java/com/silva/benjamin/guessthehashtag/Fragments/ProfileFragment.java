@@ -1,6 +1,5 @@
 package com.silva.benjamin.guessthehashtag.Fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,11 +23,8 @@ import com.silva.benjamin.guessthehashtag.ResultsActivity;
 import com.silva.benjamin.guessthehashtag.models.User;
 import com.silva.benjamin.guessthehashtag.util.AnalyticsApplication;
 import com.silva.benjamin.guessthehashtag.util.Helper;
-import com.silva.benjamin.guessthehashtag.util.UserListAdapter;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-
-import java.util.Collections;
 
 
 /**
@@ -70,9 +66,9 @@ public class ProfileFragment extends PagerFragment {
 
         mFullName.setText(Helper.currentUser.getFull_name());
         mUsername.setText(Helper.currentUser.getUsername());
-        mScore.setText(""+Helper.currentUser.getScore());
-        mWeekScore.setText(""+Helper.currentUser.getWeek_score());
-        mMaxStreak.setText(""+Helper.currentUser.getMax_streak());
+        mScore.setText("" + Helper.currentUser.getScore());
+        mWeekScore.setText("" + Helper.currentUser.getWeek_score());
+        mMaxStreak.setText("" + Helper.currentUser.getMax_streak());
         mRank.setText("--");
         Picasso.with(getActivity()).load(Helper.currentUser.getProfile_picture()).into(mProfilePic, new Callback() {
             @Override
@@ -87,7 +83,7 @@ public class ProfileFragment extends PagerFragment {
                 mProfileLoadingWrapper.setVisibility(View.GONE);
             }
         });
-        mRootRef =  new Firebase("https://guessthehashtag.firebaseio.com/data");
+        mRootRef = new Firebase("https://guessthehashtag.firebaseio.com/data");
         mRootRef.authWithCustomToken("91cvapZgSdVcjyvrepGKS2nSgDDFAiiDBLDl97Rx", new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
@@ -103,14 +99,14 @@ public class ProfileFragment extends PagerFragment {
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-               long counter = snapshot.getChildrenCount();
+                long counter = snapshot.getChildrenCount();
                 for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                     User u = userSnapshot.getValue(User.class);
-                    if(u.getUsername().equals(Helper.currentUser.getUsername())){
-                        mRank.setText(""+counter);
+                    if (u.getUsername().equals(Helper.currentUser.getUsername())) {
+                        mRank.setText("" + counter);
                         break;
                     }
-                    counter --;
+                    counter--;
                 }
             }
 
