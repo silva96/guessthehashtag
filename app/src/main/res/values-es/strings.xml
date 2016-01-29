@@ -18,4 +18,8 @@
     <string name="overall">histórico</string>
     <string name="profile">perfil</string>
     <string name="weekly">semanal</string>
+    <string name="are_you_sure_want_loose_streak">Estás por salir del juego y perder tu racha actual, ¿estás seguro que quieres salir?</string>
+    <string name="error_no_internet_connection">Error: No hay conexión a internet</string>
+    <string name="new_streak">Nueva mejor racha: %1$d en seguidas!</string>
+    <string name="oh_no_an_error_occurred_retrying">Oh no! ha ocurrido un error, reintentando</string>
 </resources>
