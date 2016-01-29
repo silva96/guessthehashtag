@@ -19,7 +19,7 @@ public class SearchData extends Data {
     public ArrayList<Media> filterMedia(String type) {
         ArrayList<Media> filtered = new ArrayList<>();
         for (Media m : data) {
-            if (m.getType().equals(type)) filtered.add(m);
+            if (m.getType().equals(type) && m.getTags().length < 5) filtered.add(m);
         }
         return filtered;
     }
