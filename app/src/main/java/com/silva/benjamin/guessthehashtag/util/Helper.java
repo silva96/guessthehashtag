@@ -3,18 +3,17 @@ package com.silva.benjamin.guessthehashtag.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.silva.benjamin.guessthehashtag.ResultsActivity;
-import com.silva.benjamin.guessthehashtag.models.Media;
+
 import com.silva.benjamin.guessthehashtag.models.User;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Retrofit;
 
 /**
  * Created by benjamin on 12/7/15.
@@ -54,9 +53,13 @@ public class Helper {
     }
 
     public static InstagramService service() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(logging).build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.instagram.com")
                 .addConverterFactory(GsonConverterFactory.create())
+                //.client(client) //uncomment this line to debug
                 .build();
         InstagramService service = retrofit.create(InstagramService.class);
         return service;

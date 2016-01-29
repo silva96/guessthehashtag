@@ -37,7 +37,6 @@ import com.silva.benjamin.guessthehashtag.util.AnalyticsApplication;
 import com.silva.benjamin.guessthehashtag.util.Helper;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -45,12 +44,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int NUMBER_OF_IMAGES = 120;
     ImageView mInstaImage;
     Button mButton1;
     Button mButton2;
@@ -127,107 +127,114 @@ public class MainActivity extends AppCompatActivity {
     public void play() {
         final String hashtag = Helper.getRandomHashTag();
         Log.d("HASHTAG", hashtag);
-        Call<SearchData> call = Helper.service().listImagesUsingTag(hashtag, "20", Helper.getToken(this));
+        Call<SearchData> call = Helper.service().listImagesUsingTag(hashtag, String.valueOf(NUMBER_OF_IMAGES), Helper.getToken(this));
         call.enqueue(new Callback<SearchData>() {
 
             @Override
-            public void onResponse(Response<SearchData> response, Retrofit retrofit) {
+            public void onResponse(Response<SearchData> response) {
                 if (response.isSuccess()) {
                     // images available
                     SearchData result = response.body();
                     if (result.getData().length > 0) {
                         ArrayList<Media> images = result.filterMedia("image");
-                        Random rnd = new Random();
-                        final Media selected = images.get(rnd.nextInt(images.size()));
-                        Picasso.with(MainActivity.this).load(selected.getImages().getStandard_resolution().getUrl()).into(mInstaImage,
-                                new com.squareup.picasso.Callback() {
-                                    @Override
-                                    public void onSuccess() {
-                                        ArrayList<String> tags = new ArrayList<String>(Arrays.asList(selected.getTags()));
-                                        ArrayList<String> hashPool = Helper.getRandomHashtagOptions(hashtag, tags);
-                                        final ArrayList<Button> buttons = new ArrayList<Button>();
-                                        buttons.add(mButton1);
-                                        buttons.add(mButton2);
-                                        buttons.add(mButton3);
-                                        buttons.add(mButton4);
-                                        for (int i = 0; i < buttons.size(); i++) {
-                                            buttons.get(i).setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    if (((Button) v).getText().equals("#" + hashtag)) {
-                                                        ((Button) v).setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.green_correct));
-                                                        Helper.currentUser.setScore(Helper.currentUser.getScore() + 1 + Helper.mCurrentStreak);
-                                                        Helper.currentUser.setWeek_score(Helper.currentUser.getWeek_score() + 1 + Helper.mCurrentStreak);
-                                                        Helper.mCurrentStreak++;
-                                                        if (Helper.mCurrentStreak == Helper.currentUser.getMax_streak() + 1) {
-                                                            if (!doesntHaveStreakYet)
-                                                                showAToast("New Streak record: " + Helper.mCurrentStreak + " in a row !", Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 100);
-                                                        }
-                                                    } else {
-                                                        ((Button) v).setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.red_incorrect));
-                                                        for (Button b : buttons) {
-                                                            if (b.getText().equals("#" + hashtag))
-                                                                b.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.green_correct));
-                                                        }
-                                                        if (Helper.mCurrentStreak > 0 && doesntHaveStreakYet)
-                                                            doesntHaveStreakYet = false; //if fails but had a streak for first time
-                                                        if (Helper.mCurrentStreak > Helper.currentUser.getMax_streak())
-                                                            Helper.currentUser.setMax_streak(Helper.mCurrentStreak);
-                                                        Helper.mCurrentStreak = 0;
-                                                        if (Helper.currentUser.getScore() - 1 < 0)
-                                                            Helper.currentUser.setScore(0);
-                                                        else
-                                                            Helper.currentUser.setScore(Helper.currentUser.getScore() - 1);
-                                                        if (Helper.currentUser.getWeek_score() - 1 < 0)
-                                                            Helper.currentUser.setWeek_score(0);
-                                                        else
-                                                            Helper.currentUser.setWeek_score(Helper.currentUser.getWeek_score() - 1);
-                                                    }
-                                                    mScoreText.setText("" + Helper.currentUser.getScore());
-                                                    Map<String, Object> updateUser = new HashMap<>();
-                                                    updateUser.put("score", Helper.currentUser.getScore());
-                                                    updateUser.put("max_streak", Helper.currentUser.getMax_streak());
-                                                    updateUser.put("week_score", Helper.currentUser.getWeek_score());
-
-                                                    mCurrentUserRef.updateChildren(updateUser);
-
-                                                    mStreakText.setText("" + Helper.mCurrentStreak);
-                                                    Handler handler = new Handler();
-                                                    handler.postDelayed(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            for (Button b : buttons) {
-                                                                b.setTextColor(ContextCompat.getColor(MainActivity.this, android.R.color.primary_text_light));
-                                                                b.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.yellow_btn));
-                                                                b.setOnClickListener(null);
+                        if (images.size() < 1) {
+                            play();
+                            return;
+                        }
+                        else {
+                            Random rnd = new Random();
+                            final Media selected = images.get(rnd.nextInt(images.size()));
+                            Picasso.with(MainActivity.this).load(selected.getImages().getStandard_resolution().getUrl()).into(mInstaImage,
+                                    new com.squareup.picasso.Callback() {
+                                        @Override
+                                        public void onSuccess() {
+                                            ArrayList<String> tags = new ArrayList<String>(Arrays.asList(selected.getTags()));
+                                            ArrayList<String> hashPool = Helper.getRandomHashtagOptions(hashtag, tags);
+                                            final ArrayList<Button> buttons = new ArrayList<Button>();
+                                            buttons.add(mButton1);
+                                            buttons.add(mButton2);
+                                            buttons.add(mButton3);
+                                            buttons.add(mButton4);
+                                            for (int i = 0; i < buttons.size(); i++) {
+                                                buttons.get(i).setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        if (((Button) v).getText().equals("#" + hashtag)) {
+                                                            ((Button) v).setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.green_correct));
+                                                            Helper.currentUser.setScore(Helper.currentUser.getScore() + 1 + Helper.mCurrentStreak);
+                                                            Helper.currentUser.setWeek_score(Helper.currentUser.getWeek_score() + 1 + Helper.mCurrentStreak);
+                                                            Helper.mCurrentStreak++;
+                                                            if (Helper.mCurrentStreak == Helper.currentUser.getMax_streak() + 1) {
+                                                                if (!doesntHaveStreakYet)
+                                                                    showAToast(String.format(getString(R.string.new_streak),Helper.mCurrentStreak), Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 100);
                                                             }
-                                                            mLoaderWrapper.setVisibility(View.VISIBLE);
-                                                            mContentWrapper.setVisibility(View.GONE);
-                                                            play();
+                                                        } else {
+                                                            ((Button) v).setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.red_incorrect));
+                                                            for (Button b : buttons) {
+                                                                if (b.getText().equals("#" + hashtag))
+                                                                    b.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.green_correct));
+                                                            }
+                                                            if (Helper.mCurrentStreak > 0 && doesntHaveStreakYet)
+                                                                doesntHaveStreakYet = false; //if fails but had a streak for first time
+                                                            if (Helper.mCurrentStreak > Helper.currentUser.getMax_streak())
+                                                                Helper.currentUser.setMax_streak(Helper.mCurrentStreak);
+                                                            Helper.mCurrentStreak = 0;
+                                                            if (Helper.currentUser.getScore() - 1 < 0)
+                                                                Helper.currentUser.setScore(0);
+                                                            else
+                                                                Helper.currentUser.setScore(Helper.currentUser.getScore() - 1);
+                                                            if (Helper.currentUser.getWeek_score() - 1 < 0)
+                                                                Helper.currentUser.setWeek_score(0);
+                                                            else
+                                                                Helper.currentUser.setWeek_score(Helper.currentUser.getWeek_score() - 1);
                                                         }
-                                                    }, 800);
+                                                        mScoreText.setText("" + Helper.currentUser.getScore());
+                                                        Map<String, Object> updateUser = new HashMap<>();
+                                                        updateUser.put("score", Helper.currentUser.getScore());
+                                                        updateUser.put("max_streak", Helper.currentUser.getMax_streak());
+                                                        updateUser.put("week_score", Helper.currentUser.getWeek_score());
 
-                                                }
-                                            });
-                                            buttons.get(i).setText("#" + hashPool.get(i));
+                                                        mCurrentUserRef.updateChildren(updateUser);
+
+                                                        mStreakText.setText("" + Helper.mCurrentStreak);
+                                                        Handler handler = new Handler();
+                                                        handler.postDelayed(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                for (Button b : buttons) {
+                                                                    b.setTextColor(ContextCompat.getColor(MainActivity.this, android.R.color.primary_text_light));
+                                                                    b.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.yellow_btn));
+                                                                    b.setOnClickListener(null);
+                                                                }
+                                                                mLoaderWrapper.setVisibility(View.VISIBLE);
+                                                                mContentWrapper.setVisibility(View.GONE);
+                                                                play();
+                                                            }
+                                                        }, 800);
+
+                                                    }
+                                                });
+                                                buttons.get(i).setText("#" + hashPool.get(i));
+                                            }
+                                            mLoaderWrapper.setVisibility(View.GONE);
+                                            mContentWrapper.setVisibility(View.VISIBLE);
+                                            mResultsButton.setVisibility(View.VISIBLE);
                                         }
-                                        mLoaderWrapper.setVisibility(View.GONE);
-                                        mContentWrapper.setVisibility(View.VISIBLE);
-                                        mResultsButton.setVisibility(View.VISIBLE);
-                                    }
 
-                                    @Override
-                                    public void onError() {
-                                        showAToast("Oh no! an error occurred, retrying", Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 30);
-                                        play();
-                                        return;
+                                        @Override
+                                        public void onError() {
+                                            showAToast(getString(R.string.oh_no_an_error_occurred_retrying), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 30);
+                                            play();
+                                            return;
+                                        }
                                     }
-                                });
+                            );
+                        }
                     }
 
                 } else {
                     // error response, no access to resource?
-                    showAToast("Oh no! an error occurred, retrying", Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 30);
+                    showAToast(getString(R.string.oh_no_an_error_occurred_retrying), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 30);
                     play();
                     return;
                 }
@@ -237,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Throwable t) {
                 // something went completely south (like no internet connection)
                 Log.d("Error", t.getMessage());
-                showAToast("Oh no! an error occurred, retrying", Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 30);
+                showAToast(getString(R.string.oh_no_an_error_occurred_retrying), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 30);
                 play();
                 return;
             }
@@ -283,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        displayAlert(getString(R.string.close_alert_title), "You are about to quit the game and loose your current streak, are you sure you want to quit?", new Runnable() {
+        displayAlert(getString(R.string.close_alert_title), getString(R.string.are_you_sure_want_loose_streak), new Runnable() {
             @Override
             public void run() {
                 MainActivity.super.onBackPressed();
@@ -303,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
 
         NetworkInfo i = cm.getActiveNetworkInfo();
         if ((i == null) || (!i.isConnected())) {
-            showAToast("Error: No internet connection", Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 30);
+            showAToast(getString(R.string.error_no_internet_connection), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 30);
             return false;
         }
         return true;
@@ -315,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
                 Call<UserData> call = Helper.service().getCurrentUser(Helper.getToken(this));
                 call.enqueue(new Callback<UserData>() {
                     @Override
-                    public void onResponse(Response<UserData> response, Retrofit retrofit) {
+                    public void onResponse(Response<UserData> response) {
                         UserData current_user_data = response.body();
                         final User current_user = current_user_data.getData();
                         Helper.saveCurrentUserName(MainActivity.this, current_user.getUsername());
@@ -325,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Throwable t) {
-                        showAToast("Oh no! an error occurred, retrying", Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, -20);
+                        showAToast(getString(R.string.oh_no_an_error_occurred), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, -20);
                         getUser();
                     }
                 });
